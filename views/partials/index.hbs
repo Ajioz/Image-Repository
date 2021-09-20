@@ -1,0 +1,78 @@
+
+{{!-- section --}}
+
+<section class="section my-4">
+    <div class="container text-center">
+        <div class="title py-5"> 
+            <h1>Shopify Image Management</h1>
+            <h4 class="text-secondary">Upload Images <strong>Here</strong>
+            <span class="material-icons">settings_accessibility</span></h4>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form action="/api/uploadmultiple" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="file" class="form-control" name="images" id="formFile" multiple>
+                        </div>
+                        <div class="col-2">
+                            <input type="submit" class="btn btn-warning" value="Upload Images">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {{!-- Display Images --}}
+        <section class="mt-5">
+            <div class="row">
+                {{#each images}}
+                    {{#each this}}
+                        {{#if imageBase64}}
+                            {{!-- boostrap cards --}}
+                            <div class="col-3">
+                                <div class="card shadow" style="width: 18rem;">
+                                    <img src='data:{{contentType}};base64,{{imageBase64}}' class="card-img-top"  class="img-fluid"  alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title font-poppins">Smart Cards</h5>
+                                        <p class="text-secondary font-size-09">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary hide" data-bs-toggle="modal" id="but" data-bs-target="#exampleModal">delete</button>
+                                        <!-- Modal -->
+                                        <form action="/api/login" method="POST">
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">This Operation is for Admin Only</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="text"class="form-control" id="username" name="username" placeholder="Username">
+                                                            <br>
+                                                            <input type="password" class="form-control" id="password" name="password" placeholder="Admin Password">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-info">SignIn</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <a href="/api/delete/{{this._id}}" class="btn btn-info font-size-09 text-light hidden">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {{!-- /boostrap cards --}}
+                        {{/if}}
+                    {{/each}}
+                {{/each}}
+            </div>
+            <p>{{accessToken}}</p>
+        </section>
+        {{!-- /Display Images --}}
+    </div>
+</section>
+
+{{!-- /section --}}
